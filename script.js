@@ -1,64 +1,49 @@
-//====================================conversiones de datos
-// es el proceso de convertir un tipo de dato a otro
+//1 Desustructuracion de datos 
+import {cali, barranquilla, maicao, santamarta} from "./ciudades.js";
 
+//2 obtener elementos del DOM html
+let enlaces = document.querySelectorAll('a');
 
+let tituloElemento = document.getElementById('titulo');
+let subtituloElemento = document.getElementById('subtitulo');
+let descripcionElemento = document.getElementById('descripcion');
+let precioElemento = document.getElementById('precio');
 
-//string a number
-let a = Number('Luis');
-console.log(a);
-console.log(typeof a);
+//3 recorrer los enlaces en bucle. evento click
+//5 for each, es un bucle que recorre los elementos de un array o una colección iterable.
 
-//entero
-let b = parseInt('32.60');
-console.log( b);
+enlaces.forEach(function(enlace) {
+    // e es el objeto de evento
+    enlace.addEventListener('click', function(e) {
+        // Prevenir la navegación predeterminada
+        e.preventDefault();
+        
+        //Remover activo o active de todos los enlaces
+        enlaces.forEach(function(enlace) {
+            enlace.classList.remove('active');
+        });
+        
+        //Agregar la class active al enlace actual
+        this.classList.add('active');
+        
+        //Obtener el contenido según el enlace
+        let contenido = obtenerContenido(this.textContent);
+        
+        //Mostrar la información en el DOM
+        tituloElemento.innerHTML = contenido.titulo;
+        subtituloElemento.innerHTML = contenido.subtitulo;
+        descripcionElemento.innerHTML = contenido.descripcion;
+        precioElemento.innerHTML = contenido.precio;
+    });
+});
 
-//flotante
-let c = parseFloat('32.60');
-console.log( c);
-
-//numero en html + variable
-let d = +'32.60';
-console.log( d);
-
-
-//number a string
-let e = String(32.60);
-console.log(e);
-console.log(typeof e);
-
-//to estring
-let f = 1;
-let g = f.toString();
-console.log(g);
-console.log(typeof g);
-
-// Date a numbers
-let h = new Date();
-let i = Number(h);
-
-console.log(i);
-console.log(typeof i);
-
-// Date a string
-let j = String(h);
-console.log(j);
-console.log(typeof j);
-
-// Number a Boolean
-let k = Boolean(0);
-let l = Boolean(1); // 1,2... true
-
-console.log(k);
-console.log(typeof k);
-
-let ricardo = 0;
-if (ricardo && ricardo === 0) {  //0 es false, condiciona saldra false
-    console.log('Ricardo es dato');
-} else{
-    console.log('Ricardo es null ');
+//4 Función para traer la información correcta desde ciudades.js
+function obtenerContenido(enlace) {
+    let contenido = {
+        'Cali': cali, 
+        'Barranquilla': barranquilla,
+        'Maicao': maicao,
+        'Santa Marta': santamarta
+    };
+    return contenido[enlace];
 }
-
-// Boolean a string
-let m = String(true);
-let n = true.toString();
-console.log(m);
